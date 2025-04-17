@@ -5,6 +5,7 @@ help:
 	@echo "make format      # generate correctly formatted benchmarks in folder prepared/"
 	@echo "make classify    # generate files containing a classification into categories in prepared/"
 	@echo "make lists       # generate .list files with paths to all benchmarks in each category"
+	@echo "make ...         # TODO: document more commands"
 
 venv:
 	python3 -m venv venv
