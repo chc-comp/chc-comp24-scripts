@@ -1,0 +1,41 @@
+#!/usr/bin/bash
+
+TRACKS=("LIA" "LIA-Lin" "LIA-Lin-Arrays" "LIA-Arrays" "ADT-LIA" "ADT-LIA-Arrays")
+
+printf "repository"
+
+for track in ${TRACKS[@]}
+do
+    printf ";%s;;;" $track
+done
+
+echo
+
+for track in ${TRACKS[@]}
+do
+    printf ";A;B;C;D" $track
+done
+
+echo
+
+for family in `cat family`
+do
+    printf "%s" $family
+
+    for track in ${TRACKS[@]}
+    do
+
+        if test -d categories/$track/$family
+        then
+            A=`grep A categories/$track/$family -r |wc -l`
+            B=`grep B categories/$track/$family -r |wc -l`
+            C=`grep C categories/$track/$family -r |wc -l`
+            D=`grep D categories/$track/$family -r |wc -l`
+            printf ";%d;%d;%d;%d" $A $B $C $D
+        else
+            printf ";;;;"
+        fi
+    done
+
+    echo
+done

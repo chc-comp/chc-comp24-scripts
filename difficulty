@@ -1,0 +1,33 @@
+#!/usr/bin/bash
+
+# directory of the solver binaries
+SOLVERS="solvers"
+
+# make scripts available as commands
+PATH="$SOLVERS/:$PATH"
+
+TIMEOUT="$1"
+SOLVER1="$2"
+SOLVER2="$3"
+IN="$4"
+OUT="$5"
+
+# now run both solvers in sequence with the given timeout
+RESULT1=`timeout "$TIMEOUT" $SOLVER1 $IN`
+RESULT2=`timeout "$TIMEOUT" $SOLVER2 $IN`
+
+function solved() {
+    [[ $1 == "sat" || $1 == "unsat" ]]
+}
+
+if solved $RESULT1 && solved $RESULT2; then
+    RANKING="A"
+elif solved $RESULT1; then
+    RANKING="B"
+elif solved $RESULT2; then
+    RANKING="C"
+else
+    RANKING="D"
+fi
+
+echo $RANKING > $OUT

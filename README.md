@@ -1,2 +1,3 @@
-# chc-comp24-scripts
-Scripts used in CHC-COMP 2024
+# CHC-COMP 2024 Scripts
+
+This repository documents the scripts used in CHC-COMP 2024.

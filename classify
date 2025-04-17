@@ -1,0 +1,29 @@
+#!/usr/bin/bash
+
+# path where the chc-tools are installed
+CHC_TOOLS="../chc-tools"
+
+# make scripts available as commands
+PATH="$CHC_TOOLS/format-checker/:$PATH"
+
+IN="$1"
+OUT="$2"
+
+# invoke similarly to
+# ./classify path/to/file.smt2 path/to/file.txt
+# after which the second parameter is a file that, if present, contains the name of the category
+
+if check-LIA-Lin "$IN"; then
+	echo "LIA-Lin" > "$OUT"
+elif check-LIA "$IN"; then
+	echo "LIA" > "$OUT"
+elif check-LIA-Lin-Arrays "$IN"; then
+	echo "LIA-Lin-Arrays" > "$OUT"
+elif check-LIA-Arrays "$IN"; then
+	echo "LIA-Arrays" > "$OUT"
+elif check-ADT-LIA "$IN"; then
+	echo "ADT-LIA" > "$OUT"
+elif check-LIA-ADT-Arrays "$IN"; then
+	echo "ADT-LIA-Arrays" > "$OUT"
+fi
+

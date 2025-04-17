@@ -1,0 +1,44 @@
+#!/usr/bin/bash
+
+TRACKS=("LIA" "LIA-Lin" "LIA-Lin-Arrays" "LIA-Arrays" "ADT-LIA" "ADT-LIA-Arrays")
+
+IN="$@"
+
+printf "selected"
+
+for track in ${TRACKS[@]}
+do
+    printf ";%s;;;" $track
+done
+
+echo
+
+for track in ${TRACKS[@]}
+do
+    printf ";A;B;C;D" $track
+done
+
+echo
+
+for family in `cat family`
+do
+    printf "%s" $family
+
+    for track in ${TRACKS[@]}
+    do
+
+        if test -d categories/$track/$family
+        then
+            # warning: don't omit the categories/ part or else you get some additional results
+            A=`cat $IN | grep "A;" | grep "categories/$track/$family" |wc -l`
+            B=`cat $IN | grep "B;" | grep "categories/$track/$family" |wc -l`
+            C=`cat $IN | grep "C;" | grep "categories/$track/$family" |wc -l`
+            D=`cat $IN | grep "D;" | grep "categories/$track/$family" |wc -l`
+            printf ";%d;%d;%d;%d" $A $B $C $D
+        else
+            printf ";;;;"
+        fi
+    done
+
+    echo
+done

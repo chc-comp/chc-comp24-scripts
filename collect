@@ -1,0 +1,36 @@
+#!/usr/bin/bash
+
+track="$1"
+
+for folder in $track/*
+do
+    files=`find "$folder" -name "*.smt2"`
+
+    A=`grep A "$folder" -r | wc -l`
+    B=`grep B "$folder" -r | wc -l`
+    C=`grep C "$folder" -r | wc -l`
+    D=`grep D "$folder" -r | wc -l`
+
+    for smt2 in $files
+    do
+        txt=`basename "$smt2" .smt2`.txt
+        path=`dirname "$smt2"`
+        rank=`cat "$path/$txt"`
+        md5=`md5sum "$smt2" | cut -d " " -f 1`
+
+        case "$rank" in
+            A)
+                printf "A;%d;%s;%s\n" "$A" "$smt2" "$md5" | tee -a "$track/ranked.csv"
+                ;;
+            B)
+                printf "B;%d;%s;%s\n" "$B" "$smt2" "$md5" | tee -a "$track/ranked.csv"
+                ;;
+            C)
+                printf "C;%d;%s;%s\n" "$C" "$smt2" "$md5" | tee -a "$track/ranked.csv"
+                ;;
+            D)
+                printf "D;%d;%s;%s\n" "$D" "$smt2" "$md5" | tee -a "$track/ranked.csv"
+                ;;
+        esac
+    done
+done
